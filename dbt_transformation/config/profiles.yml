@@ -2,10 +2,10 @@ dbt_transformation:
   outputs:
     dev:
       catalog: "{{env_var('DATABRICKS_CATALOG', 'abc')}}"
-      host: dbc-9a21524a-63a3.cloud.databricks.com
-      http_path: /sql/1.0/warehouses/87ab4f0e0a066040
+      host: 
+      http_path: 
       schema: xyz
       threads: 1
-      token: dapie96533dcdaecf2ff8a47266c481420b7
+      token: 
       type: databricks
   target: dev
