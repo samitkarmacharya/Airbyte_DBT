@@ -180,3 +180,18 @@ Example workflow snippet:
     dbt build
 ```
 ---
+
+---
+
+## Airflow (Local)
+
+Airflow is included to orchestrate the dbt transformation workflow.
+
+```bash
+cd airflow
+docker compose up -d
+```
+
+Open `http://localhost:8080` and log in with `admin` / `admin`.
+
+The default DAG is `dbt_daily`, which runs `dbt deps`, `dbt run`, and `dbt test`.

@@ -1,0 +1,27 @@
+﻿version: "3.8"
+
+services:
+  airflow:
+    image: apache/airflow:2.7.3
+    env_file:
+      - .env
+    environment:
+      AIRFLOW__CORE__EXECUTOR: SequentialExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite:////opt/airflow/airflow.db
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__API__AUTH_BACKENDS: "airflow.api.auth.backend.basic_auth"
+      PIP_ADDITIONAL_REQUIREMENTS: "dbt-databricks"
+      DBT_PROJECT_DIR: /opt/airflow/project/dbt_transformation
+      DBT_PROFILES_DIR: /opt/airflow/project/dbt_transformation/config
+    volumes:
+      - ../:/opt/airflow/project
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    ports:
+      - "8080:8080"
+    user: "${AIRFLOW_UID}:0"
+    command: >
+      bash -c "airflow db migrate &&
+               airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com || true;
+               airflow scheduler & airflow webserver"
