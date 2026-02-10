@@ -195,3 +195,14 @@ docker compose up -d
 Open `http://localhost:8080` and log in with `admin` / `admin`.
 
 The default DAG is `dbt_daily`, which runs `dbt deps`, `dbt run`, and `dbt test`.
+
+## Airflow (Postgres-Backed)
+
+Use the Postgres-backed compose file for anything beyond local dev:
+
+```bash
+cd airflow
+docker compose -f docker-compose.postgres.yaml up -d
+```
+
+Postgres connection settings live in `airflow/.env`.
