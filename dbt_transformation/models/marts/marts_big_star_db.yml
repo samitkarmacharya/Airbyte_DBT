@@ -1,4 +1,4 @@
-
+﻿
 version: 2
 
 models:
@@ -15,5 +15,27 @@ models:
         tests:
           - not_null
       - name: country
+        tests:
+          - not_null
+
+  - name: fct_orders_incremental
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+
+  - name: dim_customers_scd
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+      - name: dbt_valid_from
         tests:
           - not_null
